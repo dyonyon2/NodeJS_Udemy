@@ -1,40 +1,6 @@
-// Core Modules
-// http : Launch a server, send requests
-// https: Launch a SSL Server
-const http = require('http');
 const fs = require('fs');
 
-// Custom File Import
-const routes = require('./routes') //.js는 생략 가능
-
-// Node.JS은 단일 쓰레드로 동작한다.
-
-// function listener (req, res) {
-// }
-// http.createServer(listener);
-
-//익명함수 사용
-// http.createServer(function(req,res){
-// });
-
-
-/* routes.js 로 이동
-//화살표 함수 사용
-const server = http.createServer((req,res) => {
-    // console.log(req);
-    // Event Loop 종료
-    // process.exit();
-
-    // 주요 요소들
-    // console.log(req.url, req.method, req.headers);
-
-    // res.setHeader('Content-Type','text/html');
-    // res.write('<html>');
-    // res.write('<head><title>My First Page</title></head>');
-    // res.write('<body><h1>Hello from my Node.js Server!</h1></body>');
-    // res.write('</html>');
-    // res.end();  // resonse 전송
-
+const requestHandler = (req,res) => {
     const url = req.url;
     const method = req.method;
     if (url === '/') {
@@ -63,7 +29,7 @@ const server = http.createServer((req,res) => {
             // res.statusCode=302;
             // res.setHeader('Location', '/');
             // res.end();
-
+    
             // 비동기 방식
             fs.writeFile('message.txt',message, err => {
                 res.statusCode=302;
@@ -79,17 +45,20 @@ const server = http.createServer((req,res) => {
         res.write('</html>');
         res.end();  // resonse 전송
     }
-   
-   // routes.js 연결
-
-});
-*/
+};
 
 //Export 하는 방법 1
-// const server = http.createServer(routes);
+// module.exports = requestHandler;
 
-//Export 하는 방법 2,3
-const server = http.createServer(routes.handler);
-console.log(routes.someText);
+//Export 하는 방법 2
+// module.exports = {
+//     handler : requestHandler,
+//     someText: 'Some Hard Coded Text'
+// };
 
-server.listen(3000);
+//Export 하는 방법 3
+// module.exports.handler = requestHandler;
+// module.exports.someText = 'Some Hard Coded Text';
+// module 생략 가능
+exports.handler = requestHandler;
+exports.someText = 'Some Hard Coded Text';
