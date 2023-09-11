@@ -26,3 +26,10 @@
   	- nodemon Package : 서버 자동 재시작을 통해 수정사항 바로 적용 가능
   - 패키지 설치시 package.json에 Dependencies로 설정된다. 또한 node_modules 폴더에 dependency에 설정된 모든 패키지가 들어있다. npm install을 통해 dependency에 설정된 모든 패키지를 다시 install 할 수도 있다.
 
+- Express 모듈
+  - Nodejs의 원칙과 방법을 이용하여 웹애플리케이션을 만들기 위한 프레임워크이다.
+  - use 함수를 통해 미들웨어를 사용할 수 있다.
+  - MiddleWare는 request가 들어오고 response로 나갈때의 요청을 hooking하여 처리할 수 있다.
+  - git에서 express 로직 확인 가능
+  - use(모든 req), get, post를 통해 request들을 hooking하여 처리하는 미들웨어를 잘 사용해야한다.
+  ** use는 like 느낌이라 뒤쪽은 달라도 '/test' 앞쪽 url만 같으면 동작하지만, get과 post는 url이 정확히 일치해야한다.
