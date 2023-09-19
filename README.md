@@ -1,3 +1,10 @@
+- Section 1 : Node JS 소개
+- Section 2 : JS 기본
+- Section 3 : 기본 개념
+- Section 4 : 개발 환경(NPM, nodemon...) 소개 및 세팅
+- Section 5 : Express.js
+- Section 6 : 동적 콘텐츠 작업 및 템플릿 엔진
+
 [Node.js & JavaScript]
 - Node.js 란 JavaScript 런타임이다.
 - JavaScript는 브라우저에서 많이 사용되는 프로그래밍 언어이다.
@@ -33,3 +40,21 @@
   - git에서 express 로직 확인 가능
   - use(모든 req), get, post를 통해 request들을 hooking하여 처리하는 미들웨어를 잘 사용해야한다.
   ** use는 like 느낌이라 뒤쪽은 달라도 '/test' 앞쪽 url만 같으면 동작하지만, get과 post는 url이 정확히 일치해야한다.
+  - express.set('name','value'); => 글로벌 변수 설정. app.get()으로 사용한다.
+
+- Section 6
+  - 사용자의 입력 처리
+    - 입력을 받아 데이터베이스에 저장하여 관리하는 것이 좋다.
+    - 데이터베이스를 사용하기 전 JS 변수로 관리하는 방법
+      - 추가가 가능한 배열 변수를 만들어 export 하는 방법 
+        - ex. const products =[]; 
+          products.push({title:req.body.title}); 
+          exports.products = products;
+        - 해당 방식은 실행 중인 노드 서버에 데이터가 내제된 것이라, 사용자간에 공유됨
+  - 템플릿 엔진 : HTML 틀과 동적으로 데이터가 변경될 곳에 사용될 placeholders/Snippets을 통해 실제 동적 콘텐츠가 들어간 HTML을 생성해주는 엔진이다.(EJS, Pug(=Jade), Handlebars)
+    - 대표적인 템플릿들 표현예시
+      - EJS (HTML+JavaScript) : &#60;p>&#60;%= name %>&#60;/p> 
+      - Pug (=Jade, HTML + custom language) : p #{name}
+        - app.js에서 app.set('view engine','pug');을 통해 view engine으로 pug를 사용한다고 set한 뒤, res.render('shop') 하면 shop.pug를 찾아서 HTML로 전달한다.
+        - 데이터를 넘길 때에는 Object 형식으로 key, value를 통해 res.render('shop',{prods:products, docTitle: 'Shop'});로 넘겨주고 pug 파일 내에서 #{key}로 값을 가져와서 사용할 수 있다.
+      - Handlebars (HTML + custom language) : &#60;p>{{name}}&#60;/p>
